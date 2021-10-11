@@ -40,7 +40,7 @@ Table of Contents
       * [MsDeploy - 8172](#msdeploy---8172)
       * [Webdav](#webdav)
       * [Unknown ports](#unknown-ports)
-      * [Port 80 - Web server](#port-80---web-server)
+      * [Port 80 - Web server](#port-80-web-server)
          * [Url brute force](#url-brute-force)
          * [Default/Weak login](#defaultweak-login)
          * [LFI/RFI](#lfirfi)
