@@ -362,7 +362,7 @@ VRFY root
 
 nmap --script=smtp-commands,smtp-enum-users,smtp-vuln-cve2010-4344,smtp-vuln-cve2011-1720,smtp-vuln-cve2011-1764 -p 25 10.11.1.111
 
-Enumerate SMTP Users
+# Enumerate SMTP Users
 
 smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 10.11.1.111
 
@@ -487,6 +487,10 @@ enum4linux -a 10.11.1.111
 
 # Connect to username shares
 smbclient //10.11.1.111/share -U username
+
+# Connect with a user and password
+
+smbclient -U "fox%iparalipomenidellabatracomiomachia"  //192.168.123.157/
 
 # Connect to share anonymously
 smbclient \\\\10.11.1.111\\<share>
