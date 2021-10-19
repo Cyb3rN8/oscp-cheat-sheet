@@ -113,6 +113,7 @@ Table of Contents
    * [<strong>Loot</strong>](#loot)
       * [Linux](#linux-1)
          * [Proof](#proof)
+         * [Local](#local)
          * [Network secret](#network-secret)
          * [Passwords and hashes](#passwords-and-hashes)
          * [Dualhomed](#dualhomed)
@@ -2123,7 +2124,12 @@ Run in victim (5985 WinRM):
 ```
 echo -e '\n'HOSTNAME:   && hostname && echo -e '\n'WHOAMI:   && whoami && echo -e '\n'PROOF:  && cat proof.txt && echo -e '\n'IFCONFIG:  && /sbin/ifconfig && echo -e '\n'PASSWD:  && cat /etc/passwd && echo -e '\n'SHADOW:  && cat /etc/shadow && echo -e '\n'NETSTAT:  && netstat -antup
 ```
+### Local
+```
+find / -type f -name local.txt 2>/dev/null
 
+cat local.txt
+```
 
 ### Network secret
 
