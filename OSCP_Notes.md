@@ -26,7 +26,7 @@ Table of Contents
       * [513 - Rlogin](#513-rlogin)
       * [541 - FortiNet SSLVPN](#541-fortinet-sslvpn)
       * [Port 554 - RTSP](#port-554-rtsp)
-      * [Port 873 - Rsync](#port-873-rync)
+      * [Port 873 - Rsync](#port-873-rsync)
       * [Port 1030/1032/1033/1038](#port-1030103210331038)
       * [MSSQL - 1433](#mssql-1433)
       * [Port 1521 - Oracle](#port-1521-oracle)
