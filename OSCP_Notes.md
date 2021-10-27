@@ -355,6 +355,7 @@ python ssh_user_enum.py --port 2223 --userList /root/Downloads/users.txt IP 2>/d
 ## Port 25 - SMTP
 
 https://book.hacktricks.xyz/pentesting/pentesting-smtp#basic-information
+
 REF:Postfish
 ```
 nc -nvvC 10.11.1.111 25
@@ -553,6 +554,7 @@ smbmap.py -u username -p 'P@$$w0rd1234!' -d ABC -H 10.11.1.111 -x 'powershell -c
 ```
 ## Port 143/993 IMAP
 REF: Postfish
+
 Banner Grab
 ```
 telnet 10.11.1.111 143 #Connect to read emails
