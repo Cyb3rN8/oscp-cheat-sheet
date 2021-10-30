@@ -975,18 +975,30 @@ site:webapplication.com password
 ```
 
 ```
-admin admin
-admin password
-admin <blank>
-admin <servicename>
-root root
-root admin
-root password
-root <servicename>
-<username if you have> password
-<username if you have> admin
-<username if you have> username
-username <servicename>
+admin / admin
+admin / password
+admin / admin12345
+admin / letmeinplease
+admin / <blank>
+admin / <servicename>
+admin / <name of the box>
+administrator / admin
+user / user
+user / 12345
+user / password
+guest / guest
+root / root
+root / admin
+root / password
+root / <servicename>
+<username if you have> / password
+<username if you have> / admin
+<username if you have> / username
+username / <servicename>
+<name of the box> / <name of the box>
+<name of the service / application> <name of the service / application>
+default account / <name of the application>
+
 ```
 
 
