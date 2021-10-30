@@ -812,6 +812,7 @@ cms-explorer -url http://10.11.1.111 -type [Drupal, WordPress, Joomla, Mambo]
 # WPScan (vp = Vulnerable Plugins, vt = Vulnerable Themes, u = Users)
 wpscan --url http://10.11.1.111
 wpscan --url http://10.11.1.111 --enumerate vp
+wpscan --url http://192.168.221.167/ -e u,ap --plugins-detection aggressive
 wpscan --url http://10.11.1.111 --enumerate vt
 wpscan --url http://10.11.1.111 --enumerate u
 wpscan -e --url https://url.com
