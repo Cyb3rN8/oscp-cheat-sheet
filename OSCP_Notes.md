@@ -1786,6 +1786,8 @@ C:\>sc qc bd
 # Look for hotfixes
 systeminfo
 
+wmic qfe list # Install date of hotfixes
+
 wmic qfe get Caption,Description,HotFixID,InstalledOn
 
 # Search for exploits
