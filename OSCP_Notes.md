@@ -692,6 +692,7 @@ https://docs.oracle.com/cd/B10501_01/win.920/a95490/username.htm
 
 
 ## 3306 - MySQL
+https://book.hacktricks.xyz/pentesting/pentesting-mysql#basic-information
 
 ```
 nmap --script=mysql-databases.nse,mysql-empty-password.nse,mysql-enum.nse,mysql-info.nse,mysql-variables.nse,mysql-vuln-cve2012-2122.nse 10.11.1.111 -p 3306
@@ -809,6 +810,14 @@ nikto -h 10.11.1.111 -useproxy http://10.11.1.111:4444
 # CMS Explorer
 cms-explorer -url http://10.11.1.111 -type [Drupal, WordPress, Joomla, Mambo]
 
+# Wordpress Techniques
+Ref: Maria, Fail, Shenzi, Nukem
+https://www.hackingarticles.in/wordpress-reverse-shell/ 
+
+http://192.168.137.167/wp-content/themes/twentynineteen/404.php # Url to execute reverse shell
+
+Note: Use 'grep -R backup_scripts 2>/dev/null' to look for cron related directories. 
+
 # WPScan (vp = Vulnerable Plugins, vt = Vulnerable Themes, u = Users)
 wpscan --url http://10.11.1.111
 wpscan --url http://10.11.1.111 --enumerate vp
@@ -816,6 +825,7 @@ wpscan --url http://192.168.221.167/ -e u,ap --plugins-detection aggressive
 wpscan --url http://10.11.1.111 --enumerate vt
 wpscan --url http://10.11.1.111 --enumerate u
 wpscan -e --url https://url.com
+
 
 
 Check IP behing WAF:
