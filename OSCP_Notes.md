@@ -1185,6 +1185,7 @@ cewl
 hash-identifier
 pdfcrack SomeFile.pdf -w ~kali/rockyou.txt (For PDF files with passwords)
 fcrackzip -u -D -p ~kali/rockyou.txt SomeZip.backup (Cracking zip files passwords)
+rar2john MSSQL_BAK.rar --> john -wordlist=/home/kali/rockyou.txt MSQL.hashes (Cracking rar files)
 john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
 medusa -h 10.11.1.111 -u admin -P password-file.txt -M http -m DIR:/admin -T 10
 ncrack -vv --user offsec -P password-file.txt rdp://10.11.1.111
