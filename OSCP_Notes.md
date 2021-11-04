@@ -13,6 +13,7 @@ Table of Contents
       * [Port 22 - SSH](#port-22-ssh)
       * [Port 25 - SMTP](#port-25-smtp)
       * [Port 69 - UDP - TFTP](#port-69-udp-tftp)
+      * [Port 79 - Finger](#port-79-finger)
       * [Kerberos - 88](#kerberos-88)
       * [Port 110 - Pop3](#port-110-pop3)
       * [Port 111 - Rpcbind](#port-111-rpcbind)
@@ -392,6 +393,14 @@ This is used for tftp-server.
 
 ```
 nmap -p69 --script=tftp-enum.nse 10.11.1.111
+```
+
+## Port 79 - Finger
+Ref:HtB Sunday
+
+```
+kali@kali:~/HtB/Sunday/finger-user-enum-1.0$ ./finger-user-enum.pl -U /usr/share/seclists/Seclists/Usernames/Names/names.txt -t 10.10.10.76 
+
 ```
 
 ## Kerberos - 88
@@ -1187,6 +1196,7 @@ pdfcrack SomeFile.pdf -w ~kali/rockyou.txt (For PDF files with passwords)
 fcrackzip -u -D -p ~kali/rockyou.txt SomeZip.backup (Cracking zip files passwords)
 rar2john MSSQL_BAK.rar --> john -wordlist=/home/kali/rockyou.txt MSQL.hashes (Cracking rar files)
 john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
+john --wordlist=/home/kali/rockyou.txt sammy_hash.txt # Crack user hash [user:hash] in file
 medusa -h 10.11.1.111 -u admin -P password-file.txt -M http -m DIR:/admin -T 10
 ncrack -vv --user offsec -P password-file.txt rdp://10.11.1.111
 crowbar -b rdp -s 10.11.1.111/32 -u victim -C /root/words.txt -n 1
