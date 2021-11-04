@@ -1824,7 +1824,9 @@ C:\>sc qc bd
 
 ```
 # Look for hotfixes
-systeminfo
+systeminfo # Copy to txt file and run wes.py
+
+sudo python wes.py sysinfo.txt -i "Elevation of Privilege"
 
 wmic qfe list # Install date of hotfixes
 
