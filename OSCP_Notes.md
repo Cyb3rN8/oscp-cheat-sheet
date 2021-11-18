@@ -1079,6 +1079,7 @@ cat php_cmd.php
 
 ```
 # References
+https://portswigger.net/web-security/sql-injection/cheat-sheet
 https://www.exploit-db.com/papers/17934
 https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/
 https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
