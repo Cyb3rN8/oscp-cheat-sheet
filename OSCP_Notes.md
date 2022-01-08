@@ -2242,6 +2242,8 @@ python3 /home/kali/.local/bin/ntlmrelayx.py -6 -t ldaps://192.168.68.122 -wh fak
 
 ## AD Recon
 
+https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#active-directory-attacks
+
 
 ### PowerView
 ```
