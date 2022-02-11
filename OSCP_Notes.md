@@ -1451,6 +1451,11 @@ Proving Grounds Sirol / Peppo
 python -m SimpleHTTPServer 8080
 
 python3 -m http.server 8080
+
+php -S 0.0.0.0:8080
+
+ruby -run  -e -httpd . -p 8080
+
 https://github.com/sc0tfree/updog
 updog
 ```
