@@ -111,7 +111,7 @@ Table of Contents
             * [Powershell Reverse Shell](#powershell-reverse-shell)
          * [Windows privesc/enum tools](#windows-privescenum-tools)
          * [Windows precompiled exploits](#windows-precompiled-exploits)
-         * [Windows Port Forwarding](#windows-port-forwarding)
+   * [Port Forwarding](#port-forwarding)
    * [<strong>Active Directory</strong>](#active-directory)
       * [LLMNR/NBT-NS](#llmnrnbt-ns)
       * [SMB Relay Attack](#smb-relay-attack)
@@ -1280,7 +1280,7 @@ hashcat -m 0 'hash$' /home/kali/rockyou.txt // MD5 raw
 hashcat -m 1800 'hash$' /home/kali/rockyou.txt // sha512crypt
 hashcat -m 1600 'hash$' /home/kali/rockyou.txt // MD5(APR)
 hashcat -m 1500 'hash$' /home/kali/rockyou.txt // DES(Unix), Traditional DES, DEScrypt
-hascat -m 1000 'hash$' /home/kali/rockyou.txt // NTLM
+hascat  -m 1000 'hash$' /home/kali/rockyou.txt // NTLM
 hashcat -m 500 'hash$' /home/kali/rockyou.txt // MD5crypt, MD5 (Unix)
 hashcat -m 400 'hash$'/home/kali/rockyou.txt // Wordpress
 
