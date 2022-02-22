@@ -492,6 +492,7 @@ smbclient -L \\\\10.11.1.111
 
 # Get Shares
 smbmap -H  10.11.1.111 -R <sharename>
+sudo smbmap -H 10.11.1.136 -R --download "Bob Share\Draft Contract Mr. Yamamoto.txt" # Connect to a share with a space & download files
 echo exit | smbclient -L \\\\10.11.1.111
 smbclient \\\\10.11.1.111\\<share>
 smbclient -L //10.11.1.111 -N
@@ -2266,7 +2267,7 @@ Run in victim (5985 WinRM):
 
 ## Linux
 
-sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v ## VPN to entire subnetwork
+sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v ## VPN to entire subnetwork from kali
 
 # **Active Directory**
 
