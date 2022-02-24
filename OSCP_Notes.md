@@ -2267,7 +2267,7 @@ Run in victim (5985 WinRM):
 
 ## Linux
 
-sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v ## VPN to entire subnetwork from kali
+sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v ## Requires PW of user; Socks Proxy to entire subnetwork from kali
 
 # **Active Directory**
 
