@@ -120,7 +120,7 @@ WTable of Contents
       * [AD Recon](#ad-recon)
          * [PowerView](#powerview)
          * [Bloodhound](#bloodhound)
-         *[Mimikatz Commands](#mimikatz-commands)
+         * [Mimikatz Commands](#mimikatz-commands)
    * [<strong>Loot</strong>](#loot)
       * [Linux](#linux-1)
          * [Proof](#proof)
