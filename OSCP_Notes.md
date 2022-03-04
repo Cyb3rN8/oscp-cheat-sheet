@@ -1106,6 +1106,8 @@ https://portswigger.net/web-security/sql-injection/cheat-sheet
 https://www.exploit-db.com/papers/17934
 https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
 https://book.hacktricks.xyz/pentesting-web/sql-injection
+https://pentestwiki.org/sql-injection/ 
+https://www.tarlogic.com/blog/red-team-tales-0x01/
 
 # Enumeration
 
