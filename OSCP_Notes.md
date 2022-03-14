@@ -1893,6 +1893,8 @@ accesschk.exe -uwcqv "BUILTIN\Users" * /accepteula
 
 netsh firewall show state
 netsh firewall show config
+netsh advfirewall firewall show rule name=all
+netsh advfirewall show currentprofile
 
 # Set path
 set PATH=%PATH%;C:\xampp\php
